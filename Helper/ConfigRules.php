@@ -4,7 +4,7 @@ namespace Feedaty\Badge\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\ScopeInterface;
-use \Feedaty\Badge\Helper\ConfigSetting;
+use Feedaty\Badge\Helper\ConfigSetting;
 
 class ConfigRules extends AbstractHelper
 {
@@ -36,8 +36,16 @@ class ConfigRules extends AbstractHelper
      * @param array $data
      * @return array
      */
-    public function getPreferencesConfig($data){
-        return $this->helperConfigSetting->getPreferencesConfig($data);
+    public function getPreferencesConfig($data, $storeId = null){
+        return $this->helperConfigSetting->getPreferencesConfig($data, $storeId);
+    }
+
+    public function getSendOrderConfig($data, $storeId = null){
+        return $this->helperConfigSetting->getSendOrderConfig($data, $storeId);
+    }
+
+    public function getSnippetConfig($data){
+        return $this->helperConfigSetting->getSnippetConfig($data);
     }
 
     /**
@@ -45,8 +53,8 @@ class ConfigRules extends AbstractHelper
      *
      * @return array
      */
-    public function getFeedatyCode() {
-        $feedaty_code = $this->getPreferencesConfig('feedaty_code');
+    public function getFeedatyCode($storeId = null) {
+        $feedaty_code = $this->getPreferencesConfig('feedaty_code', $storeId);
 
         return $feedaty_code;
      }
@@ -56,10 +64,44 @@ class ConfigRules extends AbstractHelper
      *
      * @return array
      */
-    public function getFeedatySecret() {
-        $feedaty_code = $this->getPreferencesConfig('feedaty_secret');
+    public function getFeedatySecret($storeId = null) {
+        $feedaty_code = $this->getPreferencesConfig('feedaty_secret', $storeId);
 
         return $feedaty_code;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCreateReviewEnabled($storeId = null) {
+        $feedaty_code = $this->getPreferencesConfig('create_reviews_enabled', $storeId);
+
+        return $feedaty_code;
+    }
+
+    public function getReviewForceDefaultStore($storeId = null)
+    {
+        $force_store = $this->getPreferencesConfig('create_reviews_force_default_store', $storeId);
+        return $force_store;
+    }
+
+    public function getReviewDefaultStore($storeId = null)
+    {
+        $default_store = $this->getPreferencesConfig('create_reviews_default_store', $storeId);
+        return $default_store;
+    }
+
+
+    public function getSendOrderStatus( $storeId = null)
+    {
+        $orderStatus = $this->getSendOrderConfig('sendorder', $storeId);
+        return $orderStatus;
+    }
+
+    public function getSnippetEnabled($storeId = null)
+    {
+        $snippetEnabled = $this->getSnippetConfig('snippet_prod_enabled', $storeId);
+        return $snippetEnabled;
     }
 
 }
